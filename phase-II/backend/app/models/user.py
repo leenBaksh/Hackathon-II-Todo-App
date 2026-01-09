@@ -1,0 +1,35 @@
+from sqlmodel import SQLModel, Field, Relationship
+from typing import List, Optional
+from datetime import datetime
+import uuid
+
+
+class UserBase(SQLModel):
+    email: str = Field(unique=True, index=True)
+    first_name: Optional[str] = None
+    last_name: Optional[str] = None
+
+
+class User(UserBase, table=True):
+    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
+    hashed_password: str
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+    updated_at: datetime = Field(default_factory=datetime.utcnow)
+    
+    # Relationship to tasks
+    tasks: List["Task"] = Relationship(back_populates="user")
+
+
+class UserCreate(UserBase):
+    password: str
+
+
+class UserUpdate(SQLModel):
+    first_name: Optional[str] = None
+    last_name: Optional[str] = None
+
+
+class UserPublic(UserBase):
+    id: uuid.UUID
+    created_at: datetime
+    updated_at: datetime

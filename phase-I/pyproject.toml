@@ -1,0 +1,22 @@
+[project]
+name = "todo-app"
+version = "0.1.0"
+description = "A scalable in-memory todo application"
+authors = [
+    { name = "leenBaksh", email = "sandleenbakshi@gmail.com" }
+]
+dependencies = []
+requires-python = ">=3.13"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[dependency-groups]
+dev = [
+    "pytest>=8.0.0",
+    "pytest-cov>=4.1.0",
+]
+
+[project.scripts]
+todo = "todo_app.__main__:main"
